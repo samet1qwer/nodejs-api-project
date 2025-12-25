@@ -68,6 +68,16 @@ app.put("/products/:id", (req, res) => {
   res.status(200).json(product);
 });
 
+app.delete("/products/:id", (req, res) => {
+  const id = req.params.id;
+  const product = producs.find((p) => p.id == id);
+  if (!product) {
+    return res.status(404).send("Product not found");
+  }
+  producs.splice(producs.indexOf(product), 1);
+  res.send(product);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
