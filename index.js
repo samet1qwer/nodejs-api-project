@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-
+const cors = require("cors");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const producs = [
@@ -21,6 +21,14 @@ const producs = [
     description: "Description for Product 3",
   },
 ];
+
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
