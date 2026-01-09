@@ -1,22 +1,51 @@
 const express = require("express");
 const router = express.Router();
+const Joi = require("joi");
 const Product = require("../models/product");
 
-router.get("/products", (req, res) => {
-  const producs = Product.find();
-  res.send(producs);
+const productSchema = Joi.object({
+  name: Joi.string().min(3).required(),
+  description: Joi.string().min(3).required(),
+  price: Joi.number().min(0).required(),
+  isActive: Joi.boolean(),
 });
 
-router.get("/products/:id", (req, res) => {
-  const id = req.params.id;
-  const product = Product.findById(id);
-  if (!product) {
-    res.status(404).send("Product not found");
+const validateProduct = (req, res, next) => {
+  const { error } = productSchema.validate(req.body);
+
+  if (error) {
+    return res.status(400).json({
+      message: error.details[0].message,
+    });
   }
-  res.send(product);
+
+  next();
+};
+
+router.get("/products", async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-router.post("/products", async (req, res) => {
+router.get("/products/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post("/products", validateProduct, async (req, res) => {
   try {
     const product = new Product({
       name: req.body.name,
@@ -27,42 +56,44 @@ router.post("/products", async (req, res) => {
     });
 
     const savedProduct = await product.save();
-
     res.status(201).json(savedProduct);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-router.put("/products/:id", async (req, res) => {
-  const id = req.params.id;
+router.put("/products/:id", validateProduct, async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
 
-  const product = await Product.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
 
-  if (!product) {
-    return res.status(404).send("Product not found");
+    product.name = req.body.name;
+    product.description = req.body.description;
+    product.price = req.body.price;
+    product.isActive = req.body.isActive ?? product.isActive;
+
+    const updatedProduct = await product.save();
+    res.json(updatedProduct);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
-
-  if (!req.body.name || !req.body.description) {
-    return res.status(400).send("Missing fields");
-  }
-
-  product.name = req.body.name;
-  product.description = req.body.description;
-  product.price = req.body.price;
-
-  const savedProduct = await product.save();
-
-  res.status(200).json(savedProduct);
 });
 
 router.delete("/products/:id", async (req, res) => {
-  const id = req.params.id;
-  const product = await Product.findByIdAndDelete(id);
-  if (!product) {
-    res.status(404).send("Product not found");
+  try {
+    const product = await Product.findByIdAndDelete(req.params.id);
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
-  res.send(product);
 });
 
 module.exports = router;
