@@ -20,43 +20,8 @@ mongoose
     console.error("MongoDB connection error:", err.message);
   });
 
-// ? schema
-
-const productSchema = new mongoose.Schema({
-  name: String,
-  description: String,
-  price: Number,
-  isActive: Boolean,
-  imgUrl: String,
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-});
-
-const Product = mongoose.model("Product", productSchema);
-
-const products = [
-  {
-    name: "Product 1",
-    description: "Description for Product 1",
-    price: 19.99,
-    isActive: true,
-    imgUrl: "https://example.com/product1.jpg",
-  },
-  {
-    name: "Product 2",
-    description: "Description for Product 2",
-    price: 24.99,
-    isActive: false,
-    imgUrl: "https://example.com/product2.jpg",
-  },
-];
-
-products.forEach((product) => {
-  const newProduct = new Product(product);
-  newProduct.save();
-});
+const Category = require("./models/category");
+const Product = require("./models/product");
 
 // ? cors
 
