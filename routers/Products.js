@@ -2,31 +2,14 @@ const express = require("express");
 const router = express.Router();
 const Product = require("../models/product");
 
-const producs = [
-  {
-    id: 1,
-    name: "Product 1",
-    description: "Description for Product 1",
-  },
-  {
-    id: 2,
-    name: "Product 2",
-    description: "Description for Product 2",
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    description: "Description for Product 3",
-  },
-];
-
 router.get("/products", (req, res) => {
+  const producs = Product.find();
   res.send(producs);
 });
 
 router.get("/products/:id", (req, res) => {
   const id = req.params.id;
-  const product = producs.find((p) => p.id == id);
+  const product = Product.findById(id);
   if (!product) {
     res.status(404).send("Product not found");
   }
