@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const Product = require("../models/product");
 
 const producs = [
   {
@@ -32,20 +33,28 @@ router.get("/products/:id", (req, res) => {
   res.send(product);
 });
 
-router.post("/products", (req, res) => {
-  const product = {
-    id: producs.length + 1,
-    name: req.body.name,
-    description: req.body.description,
-  };
+router.post("/products", async (req, res) => {
+  try {
+    const product = new Product({
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price,
+      isActive: true,
+      imgUrl: "https://picsum.photos/200/300",
+    });
 
-  producs.push(product);
-  res.send(product);
+    const savedProduct = await product.save();
+
+    res.status(201).json(savedProduct);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
-router.put("/products/:id", (req, res) => {
+
+router.put("/products/:id", async (req, res) => {
   const id = req.params.id;
 
-  const product = producs.find((p) => p.id == id);
+  const product = await Product.findById(id);
 
   if (!product) {
     return res.status(404).send("Product not found");
@@ -57,17 +66,19 @@ router.put("/products/:id", (req, res) => {
 
   product.name = req.body.name;
   product.description = req.body.description;
+  product.price = req.body.price;
 
-  res.status(200).json(product);
+  const savedProduct = await product.save();
+
+  res.status(200).json(savedProduct);
 });
 
-router.delete("/products/:id", (req, res) => {
+router.delete("/products/:id", async (req, res) => {
   const id = req.params.id;
-  const product = producs.find((p) => p.id == id);
+  const product = await Product.findByIdAndDelete(id);
   if (!product) {
-    return res.status(404).send("Product not found");
+    res.status(404).send("Product not found");
   }
-  producs.splice(producs.indexOf(product), 1);
   res.send(product);
 });
 

@@ -35,7 +35,7 @@ app.use(
 // ? routers
 
 const homeRouter = require("./routers/Home");
-const productsRouter = require("./routers/Producks");
+const productsRouter = require("./routers/Products");
 app.use("/api", homeRouter);
 app.use("/api", productsRouter);
 
