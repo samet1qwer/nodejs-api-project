@@ -1,14 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const Joi = require("joi");
-const Product = require("../models/product");
 
-const productSchema = Joi.object({
-  name: Joi.string().min(3).required(),
-  description: Joi.string().min(3).required(),
-  price: Joi.number().min(0).required(),
-  isActive: Joi.boolean(),
-});
+const Product = require("../models/product");
+const Joi = require("joi");
+const { productSchema } = require("../validations/productValidate");
 
 const validateProduct = (req, res, next) => {
   const { error } = productSchema.validate(req.body);
@@ -24,7 +19,7 @@ const validateProduct = (req, res, next) => {
 
 router.get("/products", async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().populate("category", "name -_id");
     res.json(products);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -53,6 +48,7 @@ router.post("/products", validateProduct, async (req, res) => {
       price: req.body.price,
       isActive: true,
       imgUrl: "https://picsum.photos/200/300",
+      category: req.body.category,
     });
 
     const savedProduct = await product.save();
@@ -73,6 +69,7 @@ router.put("/products/:id", validateProduct, async (req, res) => {
     product.name = req.body.name;
     product.description = req.body.description;
     product.price = req.body.price;
+    product.category = req.body.category;
     product.isActive = req.body.isActive ?? product.isActive;
 
     const updatedProduct = await product.save();
