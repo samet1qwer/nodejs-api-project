@@ -20,8 +20,11 @@ mongoose
     console.error("MongoDB connection error:", err.message);
   });
 
+// ? Models
+
 const Category = require("./models/category");
 const Product = require("./models/product");
+const Comment = require("./models/commenst");
 
 // ? cors
 
