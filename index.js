@@ -39,8 +39,10 @@ app.use(
 
 const homeRouter = require("./routers/Home");
 const productsRouter = require("./routers/Products");
+const usersRouter = require("./routers/Users");
 app.use("/api", homeRouter);
 app.use("/api", productsRouter);
+app.use("/api", usersRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
