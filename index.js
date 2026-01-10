@@ -24,7 +24,7 @@ mongoose
 
 const Category = require("./models/category");
 const Product = require("./models/product");
-const Comment = require("./models/commenst");
+const Comment = require("./models/comments");
 
 // ? cors
 

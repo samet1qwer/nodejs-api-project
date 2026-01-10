@@ -49,6 +49,7 @@ router.post("/products", validateProduct, async (req, res) => {
       isActive: true,
       imgUrl: "https://picsum.photos/200/300",
       category: req.body.category,
+      comments: [],
     });
 
     const savedProduct = await product.save();
