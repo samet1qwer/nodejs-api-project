@@ -5,7 +5,7 @@ const User = require("../models/user");
 const Joi = require("joi");
 const { userValidation } = require("../validations/userValidate");
 const comments = require("../models/comments");
-
+const bcrypt = require("bcrypt");
 router.get("/users", async (req, res) => {
   try {
     const users = await User.find();
@@ -28,9 +28,11 @@ router.post("/users", async (req, res) => {
     return res.status(400).json({ message: "User already exists" });
   }
 
+  const password = await bcrypt.hash(req.body.password, 10);
+
   const user = new User({
     username: req.body.username,
-    password: req.body.password,
+    password: password,
     email: req.body.email,
     comments: [],
   });
