@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 const cors = require("cors");
 const mongoose = require("mongoose");
+const { error } = require("./middlware/error");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -36,6 +37,7 @@ app.use(
   })
 );
 // ? routers
+app.use(error);
 
 const homeRouter = require("./routers/Home");
 const productsRouter = require("./routers/Products");
