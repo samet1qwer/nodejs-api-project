@@ -50,7 +50,7 @@ router.post("/users", async (req, res) => {
 
 // ? login
 
-router.post("/login", async (req, res) => {
+router.post("/users/login", async (req, res) => {
   const { error } = loginValidation.validate(req.body);
   if (error) {
     return res.status(400).send({
