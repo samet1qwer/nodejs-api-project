@@ -4,6 +4,7 @@ const { access } = require("../middlware/auth");
 const Product = require("../models/product");
 const Joi = require("joi");
 const { productSchema } = require("../validations/productValidate");
+const { isAdmin } = require("../middlware/isAdmin");
 
 const validateProduct = (req, res, next) => {
   const { error } = productSchema.validate(req.body);
@@ -40,47 +41,57 @@ router.get("/products/:id", access, async (req, res) => {
   }
 });
 
-router.post("/products", access, validateProduct, async (req, res) => {
-  try {
-    const product = new Product({
-      name: req.body.name,
-      description: req.body.description,
-      price: req.body.price,
-      isActive: true,
-      imgUrl: "https://picsum.photos/200/300",
-      category: req.body.category,
-      comments: [],
-    });
+router.post(
+  "/products",
+  [access, isAdmin],
+  validateProduct,
+  async (req, res) => {
+    try {
+      const product = new Product({
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price,
+        isActive: true,
+        imgUrl: "https://picsum.photos/200/300",
+        category: req.body.category,
+        comments: [],
+      });
 
-    const savedProduct = await product.save();
-    res.status(201).json(savedProduct);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-router.put("/products/:id", access, validateProduct, async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
+      const savedProduct = await product.save();
+      res.status(201).json(savedProduct);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
     }
-
-    product.name = req.body.name;
-    product.description = req.body.description;
-    product.price = req.body.price;
-    product.category = req.body.category;
-    product.isActive = req.body.isActive ?? product.isActive;
-
-    const updatedProduct = await product.save();
-    res.json(updatedProduct);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
   }
-});
+);
 
-router.delete("/products/:id", access, async (req, res) => {
+router.put(
+  "/products/:id",
+  [access, isAdmin],
+  validateProduct,
+  async (req, res) => {
+    try {
+      const product = await Product.findById(req.params.id);
+
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+
+      product.name = req.body.name;
+      product.description = req.body.description;
+      product.price = req.body.price;
+      product.category = req.body.category;
+      product.isActive = req.body.isActive ?? product.isActive;
+
+      const updatedProduct = await product.save();
+      res.json(updatedProduct);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
+
+router.delete("/products/:id", [access, isAdmin], async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);
 
