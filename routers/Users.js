@@ -3,6 +3,8 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const Joi = require("joi");
+const jwt = require("jsonwebtoken");
+
 const {
   userValidation,
   loginValidation,
@@ -18,7 +20,9 @@ router.get("/users", async (req, res) => {
   }
 });
 
-router.post("/users", async (req, res) => {
+// ? register
+
+router.post("/users/create", async (req, res) => {
   const { error } = userValidation.validate(req.body);
   if (error) {
     return res.status(400).send({
@@ -45,12 +49,14 @@ router.post("/users", async (req, res) => {
   if (!savedUser) {
     return res.status(500).json({ message: "Error creating user" });
   }
-  res.json(savedUser);
+  const token = jwt.sign({ _id: savedUser._id }, "secretkey");
+
+  res.header("x-auth-token", token).send(token);
 });
 
 // ? login
 
-router.post("/users/login", async (req, res) => {
+router.post("/users/auth", async (req, res) => {
   const { error } = loginValidation.validate(req.body);
   if (error) {
     return res.status(400).send({
@@ -65,7 +71,9 @@ router.post("/users/login", async (req, res) => {
   if (!validPassword) {
     return res.status(400).json({ message: "Invalid password" });
   }
-  res.json({ message: "Login successful" });
+
+  const token = jwt.sign({ _id: user._id }, "secretkey");
+  res.send(token);
 });
 
 module.exports = router;
