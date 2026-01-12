@@ -4,6 +4,7 @@ const port = 3000;
 const cors = require("cors");
 const mongoose = require("mongoose");
 const { error } = require("./middlware/error");
+const { logger } = require("./middlware/logger");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -15,7 +16,7 @@ const url = "mongodb://127.0.0.1:27017/shopapp";
 mongoose
   .connect(url)
   .then(() => {
-    console.log("MongoDB connected");
+    logger.info("MongoDB connected");
   })
   .catch((err) => {
     console.error("MongoDB connection error:", err.message);
@@ -47,5 +48,5 @@ app.use("/api", productsRouter);
 app.use("/api", usersRouter);
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  logger.info(`Example app listening at http://localhost:${port}`);
 });
