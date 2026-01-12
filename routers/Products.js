@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const { access } = require("../middlware/auth");
 const Product = require("../models/product");
 const Joi = require("joi");
 const { productSchema } = require("../validations/productValidate");
@@ -17,7 +17,7 @@ const validateProduct = (req, res, next) => {
   next();
 };
 
-router.get("/products", async (req, res) => {
+router.get("/products", access, async (req, res) => {
   try {
     const products = await Product.find().populate("category", "name -_id");
     res.json(products);
@@ -26,7 +26,7 @@ router.get("/products", async (req, res) => {
   }
 });
 
-router.get("/products/:id", async (req, res) => {
+router.get("/products/:id", access, async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
 
@@ -40,7 +40,7 @@ router.get("/products/:id", async (req, res) => {
   }
 });
 
-router.post("/products", validateProduct, async (req, res) => {
+router.post("/products", access, validateProduct, async (req, res) => {
   try {
     const product = new Product({
       name: req.body.name,
@@ -59,7 +59,7 @@ router.post("/products", validateProduct, async (req, res) => {
   }
 });
 
-router.put("/products/:id", validateProduct, async (req, res) => {
+router.put("/products/:id", access, validateProduct, async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
 
@@ -80,7 +80,7 @@ router.put("/products/:id", validateProduct, async (req, res) => {
   }
 });
 
-router.delete("/products/:id", async (req, res) => {
+router.delete("/products/:id", access, async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);
 
