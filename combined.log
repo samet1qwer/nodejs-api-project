@@ -8,3 +8,43 @@
   level: 'info',
   timestamp: '2026-01-12 20:57:45'
 }
+{
+  message: 'Example app listening at http://localhost:3000',
+  level: 'info',
+  timestamp: '2026-01-12 21:01:57'
+}
+{
+  message: 'MongoDB connected',
+  level: 'info',
+  timestamp: '2026-01-12 21:01:57'
+}
+{
+  message: 'Example app listening at http://localhost:3000',
+  level: 'info',
+  timestamp: '2026-01-12 21:02:05'
+}
+{
+  message: 'MongoDB connected',
+  level: 'info',
+  timestamp: '2026-01-12 21:02:05'
+}
+{
+  message: 'Example app listening at http://localhost:3000',
+  level: 'info',
+  timestamp: '2026-01-12 21:02:30'
+}
+{
+  message: 'MongoDB connected',
+  level: 'info',
+  timestamp: '2026-01-12 21:02:30'
+}
+{
+  message: 'Example app listening at http://localhost:3000',
+  level: 'info',
+  timestamp: '2026-01-12 21:04:34'
+}
+{
+  message: 'MongoDB connected',
+  level: 'info',
+  timestamp: '2026-01-12 21:04:34'
+}
