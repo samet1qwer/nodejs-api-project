@@ -8,3 +8,8 @@ module.exports.userValidation = joi.object({
   comments: joi.array(),
   date: joi.date(),
 });
+
+module.exports.loginValidation = joi.object({
+  email: joi.string().email().required(),
+  password: joi.string().min(3).required(),
+});

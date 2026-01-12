@@ -3,7 +3,10 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const Joi = require("joi");
-const { userValidation } = require("../validations/userValidate");
+const {
+  userValidation,
+  loginValidation,
+} = require("../validations/userValidate");
 const comments = require("../models/comments");
 const bcrypt = require("bcrypt");
 router.get("/users", async (req, res) => {
@@ -48,7 +51,7 @@ router.post("/users", async (req, res) => {
 // ? login
 
 router.post("/login", async (req, res) => {
-  const { error } = userValidation.validate(req.body);
+  const { error } = loginValidation.validate(req.body);
   if (error) {
     return res.status(400).send({
       message: error.details[0].message,
