@@ -49,7 +49,7 @@ router.post("/users/create", async (req, res) => {
   if (!savedUser) {
     return res.status(500).json({ message: "Error creating user" });
   }
-  const token = jwt.sign({ _id: savedUser._id }, "secretkey");
+  const token = user.generateAuthToken();
 
   res.header("x-auth-token", token).send(token);
 });
@@ -72,7 +72,7 @@ router.post("/users/auth", async (req, res) => {
     return res.status(400).json({ message: "Invalid password" });
   }
 
-  const token = jwt.sign({ _id: user._id }, "secretkey");
+  const token = user.generateAuthToken();
   res.send(token);
 });
 
