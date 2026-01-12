@@ -48,3 +48,103 @@
   level: 'info',
   timestamp: '2026-01-12 21:04:34'
 }
+{
+  message: 'Example app listening at http://localhost:3000',
+  level: 'info',
+  timestamp: '2026-01-12 21:16:28'
+}
+{
+  message: 'MongoDB connected',
+  level: 'info',
+  timestamp: '2026-01-12 21:16:28'
+}
+{
+  message: 'Example app listening at http://localhost:3000',
+  level: 'info',
+  timestamp: '2026-01-12 21:17:45'
+}
+{
+  message: 'MongoDB connected',
+  level: 'info',
+  timestamp: '2026-01-12 21:17:45'
+}
+{
+  message: 'Example app listening at http://localhost:3000',
+  level: 'info',
+  timestamp: '2026-01-12 21:18:26'
+}
+{
+  message: 'MongoDB connected',
+  level: 'info',
+  timestamp: '2026-01-12 21:18:26'
+}
+{
+  message: 'Example app listening at http://localhost:3000',
+  level: 'info',
+  timestamp: '2026-01-12 21:19:03'
+}
+{
+  message: 'MongoDB connected',
+  level: 'info',
+  timestamp: '2026-01-12 21:19:03'
+}
+{
+  message: 'Example app listening at http://localhost:3000',
+  level: 'info',
+  timestamp: '2026-01-12 21:19:31'
+}
+{
+  message: 'MongoDB connected',
+  level: 'info',
+  timestamp: '2026-01-12 21:19:31'
+}
+{
+  message: 'Example app listening at http://localhost:3000',
+  level: 'info',
+  timestamp: '2026-01-12 21:26:28'
+}
+{
+  message: 'MongoDB connected',
+  level: 'info',
+  timestamp: '2026-01-12 21:26:28'
+}
+{
+  message: 'Example app listening at http://localhost:3000',
+  level: 'info',
+  timestamp: '2026-01-12 21:27:23'
+}
+{
+  message: 'MongoDB connected',
+  level: 'info',
+  timestamp: '2026-01-12 21:27:23'
+}
+{
+  message: 'Example app listening at http://localhost:3000',
+  level: 'info',
+  timestamp: '2026-01-12 21:28:29'
+}
+{
+  message: 'Example app listening at http://localhost:3000',
+  level: 'info',
+  timestamp: '2026-01-12 21:29:33'
+}
+{
+  message: 'Example app listening at http://localhost:3000',
+  level: 'info',
+  timestamp: '2026-01-12 21:31:10'
+}
+{
+  message: 'MongoDB connected',
+  level: 'info',
+  timestamp: '2026-01-12 21:31:10'
+}
+{
+  message: 'Example app listening at http://localhost:3000',
+  level: 'info',
+  timestamp: '2026-01-12 21:31:34'
+}
+{
+  message: 'MongoDB connected',
+  level: 'info',
+  timestamp: '2026-01-12 21:31:34'
+}

@@ -5,6 +5,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const { error } = require("./middlware/error");
 const { logger } = require("./middlware/logger");
+const config = require("config");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

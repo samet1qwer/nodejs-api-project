@@ -1,0 +1,11 @@
+{
+  "mongo": {
+    "uri": "mongodb://mongo:27017/shopapp"
+  },
+  "server": {
+    "port": 3000
+  },
+  "jwt": {
+    "secret": "JWT_SECRET"
+  }
+}
