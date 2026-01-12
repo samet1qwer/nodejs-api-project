@@ -1,3 +1,4 @@
+require("express-async-errors");
 const express = require("express");
 const router = express.Router();
 const { access } = require("../middlware/auth");
